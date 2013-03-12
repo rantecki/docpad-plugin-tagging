@@ -53,6 +53,23 @@ layout: default
 </ul>
 ```
 
+The plugin also adds a `getTagUrl(tagname)` function to the template-data so you can easily get the URL of the index page for a particular tag.  For example, in your templates you could display a list of the document's tags as links to their index page (this time in *coffeekup* just to keep life interesting):
+
+```
+---
+title: "Random document"
+layout: default
+tags:
+ - blarky
+ - snargle
+ - floopy
+---
+h2 -> "My Tags"
+ul ->
+    for tag in @document.tags
+        li -> a href: @getTagUrl(tag), -> tag
+```
+
 ## Options
 
 - *collectionName* : Can be used to narrow the scope of the plugin to a specific collection and therefore improve performance (defaults to 'documents').
