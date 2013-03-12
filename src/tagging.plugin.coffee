@@ -43,7 +43,7 @@ module.exports = (BasePlugin) ->
 
 			# regenerate tag cloud
 
-			docpad.log 'info', 'tagging::generateTags: Generating tag cloud'
+			docpad.log 'debug', 'tagging::generateTags: Generating tag cloud'
 
 			@maxCount = 0
 			@tagCloud = {}
@@ -63,7 +63,7 @@ module.exports = (BasePlugin) ->
 
 			# generate tag index pages
 
-			docpad.log 'info', 'tagging::generateTags: Generating tag index pages'
+			docpad.log 'debug', 'tagging::generateTags: Generating tag index pages'
 
 			docs_created = 0
 			newDocs = new docpad.FilesCollection()
@@ -95,7 +95,7 @@ module.exports = (BasePlugin) ->
 
 					docs_created++
 
-			docpad.log 'info', "tagging::generateTags: #{docs_created} new docs added"
+			docpad.log 'debug', "tagging::generateTags: #{docs_created} new docs added"
 
 			# docpad has already called load and contextualize on its documents
 			# so we need to call it manually here for our new docs
@@ -124,7 +124,7 @@ module.exports = (BasePlugin) ->
 			me = @
 			docpad = @docpad
 
-			docpad.log 'info', 'tagging::renderBefore'
+			docpad.log 'debug', 'tagging::renderBefore'
 
 			for own tag, item of @tagCloud
 				@tagCloud[tag].url = @getTagUrl(tag)
