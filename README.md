@@ -62,7 +62,7 @@ layout: default
 
 ### Customising the weight function
 
-By default, the tag weights are calculated using a simple logarithmic algorithm.  If that isn't floating your proverbial boat you are free to override this function with the weight function of your choosing.  For example:
+By default, the tag weights are calculated using a simple logarithmic algorithm.  If that isn't floating your proverbial boat you are free to override this function with the weight function of your choosing.  For example in your docpad config you could add:
 
 ```
 plugins:
