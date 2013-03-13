@@ -13,10 +13,26 @@ npm install --save docpad-plugin-tagging
 
 Add tag metadata to your documents as described in the [Related Plugin](https://github.com/docpad/docpad-plugin-related/).
 
-The plugin adds the `tagCloud` object to our template-data, which includes both the count (number of occurences) and weight of the tag.  The following example iterates through `tagCloud` and generates links to the tag index pages (in *eco*):
+The plugin adds the `@getTagCloud()` template helper, which returns an object containing the tag cloud data of the form:
 
 ```
-<% for tag, data of @tagCloud: %>
+yellow:
+	tag: "yellow"			// the tag name
+	url: "/tags/yellow"		// URL of the tag index page
+	count: 5					// number of documents containing the tag
+	weight: 0.25				// weight of the tag
+blue:
+	tag: "blue"
+	url: "/tags/blue"
+	count: 3
+	weight: 0.12
+...
+```
+
+The following example iterates through `tagCloud` and generates links to the tag index pages (in *eco*):
+
+```
+<% for tag, data of @getTagCloud(): %>
     <a href="<%= data.url %>" data-tag-count="<%= data.count %>" data-tag-weight="<%= data.weight %>">
         <%= tag %>
     </a>
@@ -49,11 +65,11 @@ layout: default
 <ul>
 <% for doc in @getCollection('documents').findAll({tags: '$in': @document.tag}).toJSON(): %>
     <li><a href="<%= doc.url %>"><%= doc.title %></a></li>
-<% end %>
+<% end %>function to the template-data
 </ul>
 ```
 
-The plugin also adds a `getTagUrl(tagname)` function to the template-data so you can easily get the URL of the index page for a particular tag.  For example, in your templates you could display a list of the document's tags as links to their index page (this time in *coffeekup* just to keep life interesting):
+The plugin also adds a `@getTagUrl(tagname)` template helper so you can easily get the URL of the index page for a particular tag.  For example, in your templates you could display a list of the document's tags as links to their index page (this time in *coffeekup* just to keep life interesting):
 
 ```
 ---
@@ -62,7 +78,7 @@ layout: default
 tags:
  - blarky
  - snargle
- - floopy
+ - floopyfunction to the template-data
 ---
 h2 -> "My Tags"
 ul ->

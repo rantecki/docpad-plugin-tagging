@@ -28,6 +28,21 @@ module.exports = (BasePlugin) ->
 			@tagCollection = @docpad.getDatabase().createLiveChildCollection()
 							.setQuery("isTagIndex", tag: $exists: true)
 
+		extendTemplateData: ({templateData}) ->
+			me = @
+			templateData.getTagCloud = ->
+				return me.tagCloud
+			templateData.getTagUrl = (tag) ->
+ 				return me.getTagUrl(tag)
+			@
+
+		contextualizeAfter: ({collection, templateData}, next) ->
+			if not @contextualizeAfterLock
+				return @generateTags(collection, next)
+			else
+				next()
+			@
+
 		getTagUrl: (tag) ->
 			doc = @tagCollection.findOne(tag: tag)
 			return doc?.get('url')
@@ -108,30 +123,11 @@ module.exports = (BasePlugin) ->
 
 					@contextualizeAfterLock = false
 
+					for own tag, item of @tagCloud
+						@tagCloud[tag].url = @getTagUrl(tag)
+						@tagCloud[tag].weight = @config.getTagWeight(item.count, @maxCount)
+
 					next()
 
 			@
 
-		contextualizeAfter: ({collection, templateData}, next) ->
-			if not @contextualizeAfterLock
-				return @generateTags(collection, next)
-			else
-				next()
-			@
-
-		renderBefore: ({collection, templateData}, next) ->
-
-			me = @
-			docpad = @docpad
-
-			docpad.log 'debug', 'tagging::renderBefore'
-
-			for own tag, item of @tagCloud
-				@tagCloud[tag].url = @getTagUrl(tag)
-				@tagCloud[tag].weight = @config.getTagWeight(item.count, @maxCount)
-
-			templateData.tagCloud = @tagCloud
-			templateData.getTagUrl = (tag) => return @getTagUrl(tag)
-
-			next()
-			@
