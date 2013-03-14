@@ -29,7 +29,7 @@ blue:
 ...
 ```
 
-The following example iterates through `tagCloud` and generates links to the tag index pages (in *eco*):
+The following example iterates through the tag cloud and generates links to the tag index pages (in *eco*):
 
 ```
 <% for tag, data of @getTagCloud(): %>
@@ -43,7 +43,7 @@ Note that in this example we've added the count and weight here as HTML5 data fi
 
 ### Index Pages
 
-The plugin will also dynamically generate a document for each tag found with the url `tags/[tagname].html`.  The index document is created with the following metadata (by default):
+The plugin will also dynamically generate a document for each tag found with the url `tags/[tagname].html`.  The index documents are created with the following metadata (by default):
 
 ```
 ---
@@ -65,7 +65,7 @@ layout: default
 <ul>
 <% for doc in @getCollection('documents').findAll({tags: '$in': @document.tag}).toJSON(): %>
     <li><a href="<%= doc.url %>"><%= doc.title %></a></li>
-<% end %>function to the template-data
+<% end %>
 </ul>
 ```
 
@@ -78,7 +78,7 @@ layout: default
 tags:
  - blarky
  - snargle
- - floopyfunction to the template-data
+ - floopy
 ---
 h2 -> "My Tags"
 ul ->
