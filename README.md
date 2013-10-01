@@ -91,6 +91,7 @@ ul ->
 - *collectionName* : Can be used to narrow the scope of the plugin to a specific collection and therefore improve performance (defaults to 'documents').
 - *indexPageLayout* : Override the name of the layout file used for the tag index pages (defaults to 'tags').
 - *indexPagePath* : Override the relative output path of the tag index pages (defaults to 'tags').
+- *indexPageLowercase* : If true, generated tag index page filenames will be forced to lowercase (defaults to false).
 - *getTagWeight* : Override the function used to generate the tag weights (see below).
 
 ### Customising the weight function

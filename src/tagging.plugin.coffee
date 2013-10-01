@@ -10,6 +10,7 @@ module.exports = (BasePlugin) ->
 			collectionName: 'documents'
 			indexPageLayout: 'tags'
 			indexPagePath: 'tags'
+			indexPageLowercase: false
 			getTagWeight: (count, maxCount) ->
 				# apply logarithmic weight algorithm
 				logmin = 0
@@ -86,6 +87,7 @@ module.exports = (BasePlugin) ->
 				# check whether a document for this tag already exists in the collection
 				if not @tagCollection.findOne(tag: tag)
 					slug = balUtil.generateSlugSync(tag)
+					slug = slug.toLowerCase() if config.indexPageLowercase
 					doc = @docpad.createDocument(
 							slug: slug
 							relativePath: config.indexPagePath + "/" + slug + ".html"
