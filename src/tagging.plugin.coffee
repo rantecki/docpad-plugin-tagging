@@ -86,27 +86,33 @@ module.exports = (BasePlugin) ->
 				# check whether a document for this tag already exists in the collection
 				if not @tagCollection.findOne(tag: tag)
 					slug = balUtil.generateSlugSync(tag)
-					doc = @docpad.createDocument(
-							slug: slug
-							relativePath: config.indexPagePath + "/" + slug + ".html"
-							isDocument: true
-							encoding: 'utf8'
-						,
-							data: " "	# NOTE: can't be empty string due to
-										# quirk in FileModel (as of docpad v6.25)
-							meta:
-								layout: config.indexPageLayout
-								referencesOthers: true
-								tag: tag
-					)
-					database.add doc
-					newDocs.add doc
+					
+					if _(config.indexPagePath).isString()
+					  config.indexPagePath = [config.indexPagePath] 
+					
+					_(config.indexPagePath).each( (path) ->
+					 	doc = @docpad.createDocument(
+  							slug: slug
+  							relativePath: path + "/" + slug + ".html"
+  							isDocument: true
+  							encoding: 'utf8'
+  						,
+  							data: " "	# NOTE: can't be empty string due to
+  										# quirk in FileModel (as of docpad v6.25)
+  							meta:
+  								layout: config.indexPageLayout
+  								referencesOthers: true
+  								tag: tag
+  					)
+  					database.add doc
+  					newDocs.add doc
 
-					# if we're reloading (reset = false), our new document
-					# will not have made it into the collection of modified
-					# documents to render - so we need to add it
-					if not renderCollection.findOne(tag: tag)
-						renderCollection.add doc
+  					# if we're reloading (reset = false), our new document
+  					# will not have made it into the collection of modified
+  					# documents to render - so we need to add it
+  					if not renderCollection.findOne(tag: tag)
+  						renderCollection.add doc 
+					)
 
 					docs_created++
 
