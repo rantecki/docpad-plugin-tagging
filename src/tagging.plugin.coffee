@@ -81,19 +81,20 @@ module.exports = (BasePlugin) ->
 			docpad.log 'debug', 'tagging::generateTags: Generating tag index pages'
 
 			docs_created = 0
+			if _(config.indexPagePath).isString()
+			  config.indexPagePath = [config.indexPagePath]
+			  
 			newDocs = new docpad.FilesCollection()
 			for own tag of @tagCloud
 				# check whether a document for this tag already exists in the collection
 				if not @tagCollection.findOne(tag: tag)
-					slug = balUtil.generateSlugSync(tag)
-					
-					if _(config.indexPagePath).isString()
-					  config.indexPagePath = [config.indexPagePath] 
+					slug = balUtil.generateSlugSync(tag) 
 					
 					_(config.indexPagePath).each( (path) ->
+					  relativePath = path + "/" + slug + ".html"
 					 	doc = @docpad.createDocument(
   							slug: slug
-  							relativePath: path + "/" + slug + ".html"
+  							relativePath: relativePath
   							isDocument: true
   							encoding: 'utf8'
   						,
@@ -110,7 +111,7 @@ module.exports = (BasePlugin) ->
   					# if we're reloading (reset = false), our new document
   					# will not have made it into the collection of modified
   					# documents to render - so we need to add it
-  					if not renderCollection.findOne(tag: tag)
+  					if not renderCollection.findOne({tag: tag, relativePath: relativePath})
   						renderCollection.add doc 
 					)
 
