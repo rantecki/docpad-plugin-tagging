@@ -25,7 +25,7 @@
 		"bal-util": "~1.16.10"
 	},
 	"devDependencies": {
-		"coffee-script": "~1.4.0"
+		"coffee-script": "~1.6.0"
 	},
 	"main": "./out/tagging.plugin.js",
 	"scripts": {
