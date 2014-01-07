@@ -17,8 +17,10 @@
 		"url": "http://github.com/rantecki/docpad-plugin-tagging.git"
 	},
 	"engines" : {
-		"node": ">=0.4",
-		"docpad": ">=6.1 <7"
+		"node": ">=0.4"
+	},
+	"peerDependencies": {
+		"docpad": ">=6.1 <=6.57"
 	},
 	"dependencies": {
 		"lodash": "~1.0.1",
