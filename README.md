@@ -1,6 +1,10 @@
 # Tagging Plugin for DocPad
 Extends [DocPad's](https://docpad.org) tagging features by adding tag cloud generation and automatic tag index pages.
 
+## Compatibility
+
+Please note that this plugin is not compatible with docpad > 6.57.  Please use the new [Tags Plugin](https://github.com/docpad/docpad-plugin-tags) instead for tag index page generation, along with the [TagCloud Plugin](https://github.com/rantecki/docpad-plugin-tagcloud) for tag cloud generation.
+
 ## Install
 
 ```
